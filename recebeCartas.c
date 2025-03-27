@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 
-void create_card
+int create_card
 (int card, char state, char cod_card[5], char city[50], int populacao, float area, float PIB, int pontosTuristicos){
-    int increment = card++;
 
     printf("--------------------------------------------\n");
-    printf("Carta %d:\n", card+1);
+    printf("Carta %d:\n", card++);
     
     printf("Estado: %c\n", state);
     // testar o concatenar de strings do estado + a entrada do usuario para o codigo da carta
@@ -17,11 +16,11 @@ void create_card
     printf("PIB: %.2f bilhoes de reais\n", PIB);
     printf("Número de Pontos Turísticos: %d\n", pontosTuristicos);
 
+    return card;
 }
 
-int main(){
-    int card = 0;
-
+void recebe_dados (int carta){
+    
     char estado;
     int populacao, pontosTuristicos;
     char cod_Carta[5];
@@ -54,8 +53,14 @@ int main(){
     printf("Digite o numero de pontos turisticos da cidade\n");
     scanf("%d\n", &pontosTuristicos);
 
-    create_card(card, estado, cod_Carta, cidade, populacao, area, PIB, pontosTuristicos);
+    create_card(carta, estado, cod_Carta, cidade, populacao, area, PIB, pontosTuristicos);
+}
+
+int main(){
+    int card = 0;
+
+    recebe_dados(card);
+    recebe_dados(card);
 
     return 0;
 }
-
