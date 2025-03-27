@@ -40,7 +40,7 @@ int main(){
 
     printf("Digite o nome da cidade\n");
     fgets(cidade, 50, stdin);
-    cidade[]
+    cidade[strcspn(cidade, "\n")] = 0;
 
     printf("Digite o numero de pessoas que residem na cidade (população)\n");
     scanf("%d", &populacao);
