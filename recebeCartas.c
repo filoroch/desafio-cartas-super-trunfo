@@ -1,8 +1,21 @@
 #include <stdio.h>
 #include <string.h>
 
-int create_card
-(int card, char state, char cod_card[5], char city[50], int populacao, float area, float PIB, int pontosTuristicos){
+typedef struct{
+    int number_card;
+    char state;
+    char cod_card[5];
+    char city[50];
+    int population, tourist_attractions;
+    float area, PIB;
+} Card;
+
+void print_card(Card){
+    
+}
+
+/*int create_card
+(char state, char cod_card[5], char city[50], int populacao, float area, float PIB, int pontosTuristicos){
 
     printf("--------------------------------------------\n");
     printf("Carta %d:\n", card++);
@@ -18,8 +31,9 @@ int create_card
 
     return card;
 }
+*/
 
-void recebe_dados (int carta){
+void recebe_dados (){
     
     char estado;
     int populacao, pontosTuristicos;
@@ -53,14 +67,44 @@ void recebe_dados (int carta){
     printf("Digite o numero de pontos turisticos da cidade\n");
     scanf("%d\n", &pontosTuristicos);
 
-    create_card(carta, estado, cod_Carta, cidade, populacao, area, PIB, pontosTuristicos);
+    create_card(estado, cod_Carta, cidade, populacao, area, PIB, pontosTuristicos);
 }
 
 int main(){
-    int card = 0;
+    Card card1, card2;
 
-    recebe_dados(card);
-    recebe_dados(card);
+    // Receber os valores de card 1
+    card1.number_card = 1;
+
+    printf("Digite uma letra de A a H (representando os estados)\n");
+    scanf(" %c", &card1.state);
+
+    printf("Digite o código do carta. O codigo é composto da letra do estado (digitada anteriormente)\n");
+    scanf("%s", card1.cod_card);
+
+    // Limpa o buffer de entrada
+    scanf("%*[^\n]");
+    scanf("%*c");
+    
+    printf("Digite o nome da cidade\n");
+    fgets(card1.city, 50, stdin);
+    card1.city[strcspn(card1.city, "\n")] = 0;
+
+    printf("Digite o numero de pessoas que residem na cidade (população)\n");
+    scanf("%d", &card1.population);
+
+    printf("Digite a área da cidade\n");
+    scanf("%f", &card1.area);
+
+    printf("Digite o PIB da cidade\n");
+    scanf("%f", &card1.PIB);
+
+    printf("Digite o numero de pontos turisticos da cidade\n");
+    scanf("%d\n", &card1.tourist_attractions);
+
+
+    // Receber os valores de card 2
+    // Imprimir ambos na tela
 
     return 0;
 }
