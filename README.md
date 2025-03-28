@@ -1,4 +1,16 @@
 # Super Trunfo
+## Executando
+1. Clone esse repositorio
+2. Abra um terminal
+3. Va ate o diretorio onde o repositorio foi clonado
+4. De permissão ao arquivo recebeCartas com:
+    ```sh
+    chmod u+x recebeCartas
+    ```
+5. Execute o programa
+    ````sh
+    ./recebeCartas
+    ````
 ## Criando as cartas do super trunfo
 ### Objetivo
 Criar um programa em C que permita oa usuário inserir os dados de duas cartas do Super Trunfo. Para cada carta o usuario deve fornecer:
