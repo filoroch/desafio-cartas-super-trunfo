@@ -10,7 +10,10 @@ typedef struct{
     float area, PIB;
 } Card;
 
-void receive_card(Card *c){
+void receive_card(Card *c, int number){
+    c->number_card = number;
+
+    printf("\n----------------------------------\n");
     printf("Digite uma letra de A a H (representando os estados)\n");
     scanf(" %c", &c->state);
 
@@ -40,7 +43,7 @@ void receive_card(Card *c){
 }
 
 void print_card(Card *c){
-    printf("--------------------------------------------\n");
+    printf("\n");
     printf("Carta %d:\n", c->number_card);
     
     printf("Estado: %c\n", c->state);
@@ -57,9 +60,9 @@ int main(){
     Card card1, card2;
 
     // Receber os valores de card 1
-    receive_card(&card1);
+    receive_card(&card1, 1);
     // Receber os valores de card 2
-    receive_card(&card2);
+    receive_card(&card2, 2);
     // Imprimir ambos na tela
     print_card(&card1);
     print_card(&card2);
