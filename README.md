@@ -44,3 +44,5 @@ Número de Pontos Turísticos: 30
     ````sh
     ./recebeCartas
     ````
+## Desenvolvido por
+Filipe Dhunior (@filoroch)
