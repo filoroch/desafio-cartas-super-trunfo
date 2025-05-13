@@ -7,8 +7,7 @@ typedef struct{
     char cod_card[5];
     char city[50];
     int population, tourist_attractions;
-    float area, PIB;
-    float densidadePopulacional, PIB_per_capita; 
+    float area, PIB, densidadePopulacional, PIB_per_capita, super_power; 
 } Card;
 
 float people_density(int population, float area){
@@ -18,7 +17,19 @@ float people_density(int population, float area){
 float pib_per_capita(int population, float PIB){
     return (float) PIB / population; 
 }
+float def_super_pow(Card card){
+    // RECEBE e DEFINE o super poder de cada carta
+    return card.super_power += (float) card.population + (float) card.area + (float) card.PIB + (float)card.tourist_attractions + (float) card.PIB_per_capita - (float) card.densidadePopulacional;
+}
 
+float compare_super_power(Card c1, Card c2){
+
+    if (c1.population > c2.population)
+    {
+       prinf("População: Cartaa %2.f")
+    }
+    
+}
 
 void receive_card(Card *c, int number){
     c->number_card = number;
