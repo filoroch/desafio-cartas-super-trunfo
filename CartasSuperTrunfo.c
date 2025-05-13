@@ -1,3 +1,10 @@
+/****
+ * PONTOS DE MELHORIA
+ * Garantir que virgulas possam ser recebidas
+ * Modificar a merda do codigo para que concatene a letra com o numero
+ * corrigir as quebras de linha
+*/
+
 #include <stdio.h>
 #include <string.h>
 
@@ -24,17 +31,17 @@ float def_super_pow(Card *card){
 // TODO: REFATORAR ESSA MERDA
 // recebe ambas as cartas, compara e retorna um print com a carta vencedora
 float compare_super_power(Card *c1, Card *c2){
-    printf("Comparação das cartas");
+    printf("Comparação das cartas\n");
     char message1[20] = "Carta 1";
     char message0[20] = "Carta 2 venceu (0)";
 
-    c1->population > c2->population ? printf("População: %s", message1) : printf("População: %s", message0);
-    c1->area > c2->area ? printf("Area: %s", message1) : printf("Area: %s", message0);
-    c1->PIB > c2->PIB ? printf("PIB: %s", message1) : printf("PIB: %s", message0);
-    c1->tourist_attractions > c2->tourist_attractions ? printf("Pontos Turisticos: %s", message1) : printf("Pontos Turisticos: %s", message0);
-    c1->PIB_per_capita > c2->PIB_per_capita ? printf("PIB PER CAPITA: %s", message1) : printf("PIB PER CAPITA: %s", message0);   
-    c1->densidadePopulacional > c2->densidadePopulacional ? printf("Densidade Populacional: %s", message1) : printf("Densidade Populacional: %s", message0);   
-    c1->super_power > c2->super_power ? printf("Super poder: Carta %s", message1) : printf("Super poder: %s", message0);   
+    c1->population > c2->population ? printf("População: %s\n", message1) : printf("População: %s\n", message0);
+    c1->area > c2->area ? printf("Area: %s\n", message1) : printf("Area: %s\n", message0);
+    c1->PIB > c2->PIB ? printf("PIB: %s\n", message1) : printf("PIB: %s\n", message0);
+    c1->tourist_attractions > c2->tourist_attractions ? printf("Pontos Turisticos: %s", message1) : printf("Pontos Turisticos: %s\n", message0);
+    c1->PIB_per_capita > c2->PIB_per_capita ? printf("PIB PER CAPITA: %s\n", message1) : printf("PIB PER CAPITA: %s", message0);   
+    c1->densidadePopulacional > c2->densidadePopulacional ? printf("Densidade Populacional: %s\n", message1) : printf("Densidade Populacional: %s\n", message0);   
+    c1->super_power > c2->super_power ? printf("Super poder: Carta %s\n", message1) : printf("Super poder: %s\n", message0);   
 }
 
 void receive_card(Card *c, int number){
