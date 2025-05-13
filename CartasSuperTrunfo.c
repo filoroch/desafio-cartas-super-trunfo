@@ -8,7 +8,17 @@ typedef struct{
     char city[50];
     int population, tourist_attractions;
     float area, PIB;
+    float densidadePopulacional, PIB_per_capita; 
 } Card;
+
+float people_density(int population, float area){
+    return (float) population / area;
+}
+
+float pib_per_capita(int population, float PIB){
+    return (float) PIB / population; 
+}
+
 
 void receive_card(Card *c, int number){
     c->number_card = number;
@@ -40,6 +50,8 @@ void receive_card(Card *c, int number){
     printf("Digite o numero de pontos turisticos da cidade\n");
     scanf("%d", &c->tourist_attractions);
 
+    c->densidadePopulacional = people_density(c->population, c->area);
+    c->PIB_per_capita = pib_per_capita(c->PIB, c->population);
 }
 
 void print_card(Card *c){
@@ -54,6 +66,8 @@ void print_card(Card *c){
     printf("Área: %.2f km²\n", c->area);
     printf("PIB: %.2f bilhoes de reais\n", c->PIB);
     printf("Número de Pontos Turísticos: %d\n", c->tourist_attractions);
+    printf("Densidade populacional: %.2f\n", c->densidadePopulacional);
+    printf("PIB per capita?  %.2f\n", c->PIB_per_capita);
 }
 
 int main(){
