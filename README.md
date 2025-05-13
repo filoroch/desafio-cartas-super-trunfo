@@ -42,7 +42,7 @@ Número de Pontos Turísticos: 30
     ```
 5. Execute o programa
     ````sh
-    ./recebeCartas
+    ./CartasSuperTrunfo
     ````
 ## Desenvolvido por
 Filipe Dhunior (@filoroch)
