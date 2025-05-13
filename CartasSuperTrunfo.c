@@ -21,14 +21,19 @@ float def_super_pow(Card card){
     // RECEBE e DEFINE o super poder de cada carta
     return card.super_power += (float) card.population + (float) card.area + (float) card.PIB + (float)card.tourist_attractions + (float) card.PIB_per_capita - (float) card.densidadePopulacional;
 }
-
+// recebe ambas as cartas, compara e retorna um print com a carta vencedora
 float compare_super_power(Card c1, Card c2){
+    printf("Comparação das cartas");
+    char message1[20] = "Carta 1";
+    char message0[20] = "Carta 2 venceu (0)";
 
-    if (c1.population > c2.population)
-    {
-       prinf("População: Cartaa %2.f")
-    }
-    
+    c1.population > c2.population ? prinf("População: %s", message1) : prinf("População: %s", message0);
+    c1.area > c2.area ? prinf("Area: %d", message1) : prinf("Area: %s", message0);
+    c1.PIB > c2.PIB ? prinf("PIB: %d", message1) : prinf("PIB: %s", message0);
+    c1.tourist_attractions > c2.tourist_attractions ? prinf("Pontos Turisticos: %d", message1) : prinf("Pontos Turisticos: %s", message0);
+    c1.PIB_per_capita > c2.PIB_per_capita ? prinf("PIB PER CAPITA: %d", message1) : prinf("PIB PER CAPITA: %s", message0);   
+    c1.densidadePopulacional > c2.densidadePopulacional ? prinf("Densidade Populacional: %d", message1) : prinf("Densidade Populacional: %s", message0);   
+    c1.super_power > c2.super_power ? prinf("Super poder: Carta %d", message1) : prinf("Super poder: %s", message0);   
 }
 
 void receive_card(Card *c, int number){
@@ -88,7 +93,7 @@ int main(){
     receive_card(&card1, 1);
     // Receber os valores de card 2
     receive_card(&card2, 2);
-    // Imprimir ambos na tela
+    // Imprimir ambos na tela    
     print_card(&card1);
     print_card(&card2);
 
