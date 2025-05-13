@@ -17,23 +17,24 @@ float people_density(int population, float area){
 float pib_per_capita(int population, float PIB){
     return (float) PIB / population; 
 }
-float def_super_pow(Card card){
+float def_super_pow(Card *card){
     // RECEBE e DEFINE o super poder de cada carta
-    return card.super_power += (float) card.population + (float) card.area + (float) card.PIB + (float)card.tourist_attractions + (float) card.PIB_per_capita - (float) card.densidadePopulacional;
+    return card->super_power += (float) card->population + (float) card->area + (float) card->PIB + (float)card->tourist_attractions + (float) card->PIB_per_capita - (float) card->densidadePopulacional;
 }
+// TODO: REFATORAR ESSA MERDA
 // recebe ambas as cartas, compara e retorna um print com a carta vencedora
-float compare_super_power(Card c1, Card c2){
+float compare_super_power(Card *c1, Card *c2){
     printf("Comparação das cartas");
     char message1[20] = "Carta 1";
     char message0[20] = "Carta 2 venceu (0)";
 
-    c1.population > c2.population ? prinf("População: %s", message1) : prinf("População: %s", message0);
-    c1.area > c2.area ? prinf("Area: %d", message1) : prinf("Area: %s", message0);
-    c1.PIB > c2.PIB ? prinf("PIB: %d", message1) : prinf("PIB: %s", message0);
-    c1.tourist_attractions > c2.tourist_attractions ? prinf("Pontos Turisticos: %d", message1) : prinf("Pontos Turisticos: %s", message0);
-    c1.PIB_per_capita > c2.PIB_per_capita ? prinf("PIB PER CAPITA: %d", message1) : prinf("PIB PER CAPITA: %s", message0);   
-    c1.densidadePopulacional > c2.densidadePopulacional ? prinf("Densidade Populacional: %d", message1) : prinf("Densidade Populacional: %s", message0);   
-    c1.super_power > c2.super_power ? prinf("Super poder: Carta %d", message1) : prinf("Super poder: %s", message0);   
+    c1->population > c2->population ? prinf("População: %s", message1) : prinf("População: %s", message0);
+    c1->area > c2->area ? prinf("Area: %d", message1) : prinf("Area: %s", message0);
+    c1->PIB > c2->PIB ? prinf("PIB: %d", message1) : prinf("PIB: %s", message0);
+    c1->tourist_attractions > c2->tourist_attractions ? prinf("Pontos Turisticos: %d", message1) : prinf("Pontos Turisticos: %s", message0);
+    c1->PIB_per_capita > c2->PIB_per_capita ? prinf("PIB PER CAPITA: %d", message1) : prinf("PIB PER CAPITA: %s", message0);   
+    c1->densidadePopulacional > c2->densidadePopulacional ? prinf("Densidade Populacional: %d", message1) : prinf("Densidade Populacional: %s", message0);   
+    c1->super_power > c2->super_power ? prinf("Super poder: Carta %d", message1) : prinf("Super poder: %s", message0);   
 }
 
 void receive_card(Card *c, int number){
@@ -43,7 +44,7 @@ void receive_card(Card *c, int number){
     printf("Digite uma letra de A a H (representando os estados)\n");
     scanf(" %c", &c->state);
 
-    printf("Digite o código do carta. O codigo é composto da letra do estado (digitada anteriormente)\n");
+    printf("Digite o código do carta-> O codigo é composto da letra do estado (digitada anteriormente)\n");
     scanf("%s", c->cod_card);
 
     // Limpa o buffer de entrada
@@ -68,6 +69,8 @@ void receive_card(Card *c, int number){
 
     c->densidadePopulacional = people_density(c->population, c->area);
     c->PIB_per_capita = pib_per_capita(c->PIB, c->population);
+    
+    def_super_pow(c);
 }
 
 void print_card(Card *c){
@@ -79,7 +82,7 @@ void print_card(Card *c){
     printf("Código da carta: %s\n", c->cod_card); 
     printf("Nome da cidade: %s\n", c->city);
     printf("População: %d\n", c->population);
-    printf("Área: %.2f km²\n", c->area);
+    printf("Área: %s.2f km²\n", c->area);
     printf("PIB: %.2f bilhoes de reais\n", c->PIB);
     printf("Número de Pontos Turísticos: %d\n", c->tourist_attractions);
     printf("Densidade populacional: %.2f\n", c->densidadePopulacional);
@@ -94,8 +97,9 @@ int main(){
     // Receber os valores de card 2
     receive_card(&card2, 2);
     // Imprimir ambos na tela    
-    print_card(&card1);
-    print_card(&card2);
-
+    //print_card(&card1);
+    //print_card(&card2);
+    // IMPRIME A COMPARAÇÂO NA TELA
+    compare_super_power(&card1, &card2);   
     return 0;
 }
