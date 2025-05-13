@@ -28,13 +28,13 @@ float compare_super_power(Card *c1, Card *c2){
     char message1[20] = "Carta 1";
     char message0[20] = "Carta 2 venceu (0)";
 
-    c1->population > c2->population ? prinf("População: %s", message1) : prinf("População: %s", message0);
-    c1->area > c2->area ? prinf("Area: %d", message1) : prinf("Area: %s", message0);
-    c1->PIB > c2->PIB ? prinf("PIB: %d", message1) : prinf("PIB: %s", message0);
-    c1->tourist_attractions > c2->tourist_attractions ? prinf("Pontos Turisticos: %d", message1) : prinf("Pontos Turisticos: %s", message0);
-    c1->PIB_per_capita > c2->PIB_per_capita ? prinf("PIB PER CAPITA: %d", message1) : prinf("PIB PER CAPITA: %s", message0);   
-    c1->densidadePopulacional > c2->densidadePopulacional ? prinf("Densidade Populacional: %d", message1) : prinf("Densidade Populacional: %s", message0);   
-    c1->super_power > c2->super_power ? prinf("Super poder: Carta %d", message1) : prinf("Super poder: %s", message0);   
+    c1->population > c2->population ? printf("População: %s", message1) : printf("População: %s", message0);
+    c1->area > c2->area ? printf("Area: %s", message1) : printf("Area: %s", message0);
+    c1->PIB > c2->PIB ? printf("PIB: %s", message1) : printf("PIB: %s", message0);
+    c1->tourist_attractions > c2->tourist_attractions ? printf("Pontos Turisticos: %s", message1) : printf("Pontos Turisticos: %s", message0);
+    c1->PIB_per_capita > c2->PIB_per_capita ? printf("PIB PER CAPITA: %s", message1) : printf("PIB PER CAPITA: %s", message0);   
+    c1->densidadePopulacional > c2->densidadePopulacional ? printf("Densidade Populacional: %s", message1) : printf("Densidade Populacional: %s", message0);   
+    c1->super_power > c2->super_power ? printf("Super poder: Carta %s", message1) : printf("Super poder: %s", message0);   
 }
 
 void receive_card(Card *c, int number){
@@ -82,7 +82,7 @@ void print_card(Card *c){
     printf("Código da carta: %s\n", c->cod_card); 
     printf("Nome da cidade: %s\n", c->city);
     printf("População: %d\n", c->population);
-    printf("Área: %s.2f km²\n", c->area);
+    printf("Área: %.2f km²\n", c->area);
     printf("PIB: %.2f bilhoes de reais\n", c->PIB);
     printf("Número de Pontos Turísticos: %d\n", c->tourist_attractions);
     printf("Densidade populacional: %.2f\n", c->densidadePopulacional);
