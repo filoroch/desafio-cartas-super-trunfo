@@ -17,6 +17,45 @@ typedef struct{
     float area, PIB, densidadePopulacional, PIB_per_capita, super_power; 
 } Card;
 
+void compare_card_atribute(Card *c1, Card *c2){
+    printf("Carta 1 %s: %d\n", c1->city, c1->population);
+    printf("Carta 2 %s: %d\n", c2->city, c1->population);
+}
+
+// MENU DE SELEÇÃO DE COMPARAÇÃO
+void compare_card_params(Card *c1, Card *c2){
+    int atributo;
+    
+    printf("Escolha um atributo para comparação: \n1. População\n2. Area\n3. PIB\n4. Densidade Populacional\n5.PIB per capta");
+    scanf("%s", &atributo);
+
+    switch (atributo)
+    {
+    case 1:
+        printf("Carta 1 %s: %d\n", c1->city, c1->population);
+        printf("Carta 2 %s: %d\n", c2->city, c1->population);
+
+        if (c1->population > c2->population){  
+            printf("Resultado: Carta 1 (%s) venceu!\n", c1->city);
+        } else {
+            printf("Resultado: Carta 2 (%s) venceu!\n", c2->city);
+        }
+        break;
+    case 2:
+        printf("Carta 1 %s: %d\n", c1->city, c1->area);
+        printf("Carta 2 %s: %d\n", c2->city, c1->area);
+
+        if (c1->area > c2->area){  
+            printf("Resultado: Carta 1 (%s) venceu!\n", c1->city);
+        } else {
+            printf("Resultado: Carta 2 (%s) venceu!\n", c2->city);
+        }
+        break;
+    default:
+        break;
+    }
+}
+
 float people_density(int population, float area){
     return (float) population / area;
 }
@@ -30,18 +69,19 @@ float def_super_pow(Card *card){
 }
 // TODO: REFATORAR ESSA MERDA
 // recebe ambas as cartas, compara e retorna um print com a carta vencedora
+// modificar para imprimir só alguns casos especificos
 float compare_super_power(Card *c1, Card *c2){
     printf("Comparação das cartas\n");
-    char message1[20] = "Carta 1";
+    char message1[20] = "Carta 1 venceu (1)";
     char message0[20] = "Carta 2 venceu (0)";
 
-    c1->population > c2->population ? printf("População: %s\n", message1) : printf("População: %s\n", message0);
-    c1->area > c2->area ? printf("Area: %s\n", message1) : printf("Area: %s\n", message0);
-    c1->PIB > c2->PIB ? printf("PIB: %s\n", message1) : printf("PIB: %s\n", message0);
-    c1->tourist_attractions > c2->tourist_attractions ? printf("Pontos Turisticos: %s", message1) : printf("Pontos Turisticos: %s\n", message0);
-    c1->PIB_per_capita > c2->PIB_per_capita ? printf("PIB PER CAPITA: %s\n", message1) : printf("PIB PER CAPITA: %s", message0);   
-    c1->densidadePopulacional > c2->densidadePopulacional ? printf("Densidade Populacional: %s\n", message1) : printf("Densidade Populacional: %s\n", message0);   
-    c1->super_power > c2->super_power ? printf("Super poder: Carta %s\n", message1) : printf("Super poder: %s\n", message0);   
+    if (c1->population > c2->population){ printf("População: %s\n", message1); } else { printf("População: %s\n", message0); }
+    if (c1->area > c2->area){ printf("Area: %s\n", message1); } else { printf("Area: %s\n", message0); }
+    if (c1->PIB > c2->PIB){ printf("PIB: %s\n", message1); }   else { printf("PIB: %s\n", message0); }
+    if (c1->tourist_attractions > c2->tourist_attractions){ printf("Atrações Turisticas: %s\n", message1); } else { printf("Atrações Turisticas: %s\n", message0); }
+    if (c1->PIB_per_capita > c2->PIB_per_capita){ printf("PIB per capta: %s\n", message1); } else { printf("PIB per capta: %s\n", message0); }
+    if (c1->densidadePopulacional > c2->densidadePopulacional){ printf("Densidade Populacional: %s\n", message1); } else { printf("Densidade Populacional: %s\n", message0); }
+    if (c1->super_power> c2->super_power){ printf("Super Power: %s\n", message1); } else { printf("Super Power: %s\n", message0); }
 }
 
 void receive_card(Card *c, int number){
@@ -95,6 +135,8 @@ void print_card(Card *c){
     printf("Densidade populacional: %.2f\n", c->densidadePopulacional);
     printf("PIB per capita?  %.2f\n", c->PIB_per_capita);
 }
+
+// CRIAR UM MENU QUE CHAME AS FUNÇÔES INDIVIDUALMENTE E TODAS AO MESMO TEMPO
 
 int main(){
     Card card1, card2;
