@@ -19,7 +19,7 @@ typedef struct{
 
 // MENU DE SELEÇÃO DE COMPARAÇÃO
 void compare_card_atribute(Card *c1, Card *c2, const char *atributo){
-// ...existing code...atributo){
+
    float valor1, valor2;
    char city1[50];
    char city2[50];
@@ -56,14 +56,18 @@ void compare_card_atribute(Card *c1, Card *c2, const char *atributo){
          printf("Carta 1 - %s: %.2f\n", city1, valor1);
          printf("Carta 2 - %s: %.2f\n", city2, valor2);
     }
-    
-    // Comparando os valores retornados dos atributos escolhidos
-    if (valor1 > valor2) {
-        printf("Resultado: Carta 1 (%s) venceu!\n", city1);
-    } else if (valor2 > valor1) { // Se valor2 é maior
-        printf("Resultado: Carta 2 (%s) venceu!\n", city2);
-    } else { // Se são iguais
-        printf("Resultado: Empate!\n");
+
+    if (valor1 == c1->densidadePopulacional) {
+        valor1 < valor2 ? printf("Resultado: Carta 1 (%s) venceu!\n", city1) :  printf("Resultado: Carta 2 (%s) venceu!\n", city2);
+    } else {
+        // Comparando os valores retornados dos atributos escolhidos
+        if (valor1 > valor2) {
+            printf("Resultado: Carta 1 (%s) venceu!\n", city1);
+        } else if (valor2 > valor1) { // Se valor2 é maior
+            printf("Resultado: Carta 2 (%s) venceu!\n", city2);
+        } else { // Se são iguais
+            printf("Resultado: Empate!\n");
+        }
     }
 }
 
@@ -107,9 +111,9 @@ float def_super_pow(Card *card){
     return card->super_power += (float) card->population + (float) card->area + (float) card->PIB + (float)card->tourist_attractions + (float) card->PIB_per_capita - (float) card->densidadePopulacional;
 }
 // TODO: REFATORAR ESSA MERDA
-// recebe ambas as cartas, compara e retorna um print com a carta vencedora
 // modificar para imprimir só alguns casos especificos
-float compare_super_power(Card *c1, Card *c2){
+/* recebe ambas as cartas, compara e retorna um print com a carta vencedora*/
+void compare_super_power(Card *c1, Card *c2){
     printf("Comparação das cartas\n");
     char message1[20] = "Carta 1 venceu (1)";
     char message0[20] = "Carta 2 venceu (0)";
@@ -151,7 +155,7 @@ float compare_super_power(Card *c1, Card *c2){
         printf("Super Power: %s\n", message0); 
     }
 }
-
+/*RECEBE DUAS CARTAS E AS CADASTRA NO CARD STRUCT*/
 void receive_card(Card *c, int number){
     c->number_card = number;
 
@@ -183,7 +187,7 @@ void receive_card(Card *c, int number){
     scanf("%d", &c->tourist_attractions);
 
     c->densidadePopulacional = people_density(c->population, c->area);
-    c->PIB_per_capita = pib_per_capita(c->PIB, c->population);
+    c->PIB_per_capita = pib_per_capita(c->population, c->PIB);
     
     def_super_pow(c);
 }
@@ -208,6 +212,9 @@ void print_card(Card *c){
 
 int main(){
     Card card1, card2;
+    int userI;
+    /*VARIAVEL DE CONTROLE PARA DETERMINAR SE A CARTA EXISTE OU NÃO*/    
+    int card1_exist = 1, card2_exist = 1;
 
     card1.number_card = 1;
     card1.state = 'S'; // Exemplo para Sudeste
@@ -218,7 +225,7 @@ int main(){
     card1.area = 1521.11; // km²
     card1.PIB = 747.90; // Bilhões de Reais (PIB municipal 2019 IBGE, valor aproximado para exemplo)
     card1.densidadePopulacional = people_density(card1.population, card1.area);
-    card1.PIB_per_capita = pib_per_capita(card1.population, card1.PIB * 1000000000); // Convertendo PIB para unidades
+    card1.PIB_per_capita = pib_per_capita(card1.population, card1.PIB); // Convertendo PIB para unidades
     def_super_pow(&card1);
 
     // Dados para Carta 2: Manaus, AM
@@ -233,15 +240,44 @@ int main(){
     card2.densidadePopulacional = people_density(card2.population, card2.area);
     card2.PIB_per_capita = pib_per_capita(card2.population, card2.PIB); // Convertendo PIB para unidades
     def_super_pow(&card2);
-    // Receber os valores de card 1
-    //receive_card(&card1, 1);
-    // Receber os valores de card 2
-    //receive_card(&card2, 2);
-    // Imprimir ambos na tela    
-    //print_card(&card1);
-    //print_card(&card2);
-    // IMPRIME A COMPARAÇÂO NA TELA
-    //compare_super_power(&card1, &card2);   
-    imprima_comparação_cartas(&card1, &card2);
+    
+    // MENU PRINCIPAL DO SISTEMA
+    do {
+        printf("\nSUPER TRUNFO \n1. Cadastrar duas cartas\n2. Imprimir duas cartas\n3. Comparar o super poder das cartas\n4. Comparar um atributo individualmente\n5. Sair\n");
+        scanf("%d", &userI);
+
+        switch (userI){
+                case 1: // CADASTRA AS DUAS CARTAS E MODIFICA UMA FLAG PARA MOSTRAR QUE ELAS FORAM CRIADAS
+                    if (card1_exist != 0 || card2_exist != 0){
+                        printf("Ja existem cartas no sistema, imprima e as verifique!");
+                    } else {
+                        receive_card(&card1, 1);
+                        card1_exist = 1;
+                        receive_card(&card2, 2);
+                        card2_exist = 1;
+                    }
+                    userI = 0;
+                    break;
+                case 2:
+                    if (card1_exist == 0 || card2_exist == 0){
+                        printf("Cadastre as cartas antes de imprimi-las!");
+                    } else {
+                        print_card(&card1);
+                        print_card(&card2);
+                    }
+                    userI = 0;
+                    break;
+                case 3: // CHAMA A FUNÇÃO DE COMPARAÇÃO DE SUPER PODER CASO AS CARTAS EXISTAM
+                    (card1_exist == 0 || card2_exist == 0) ? printf("Cadastre as cartas antes de imprimi-las!") : compare_super_power(&card1, &card2);
+                    userI = 0;
+                    break;
+                case 4: // CHAMA A FUNÇÃO DE COMPARAÇÃO DE ATRIBUTOS UNICOS
+                    (card1_exist == 0 || card2_exist == 0) ? printf("Cadastre as cartas antes de imprimi-las!") : imprima_comparação_cartas(&card1, &card2);
+                    userI = 0;
+                    break;
+                default:
+                    break;
+            }
+    } while (userI == 0);
     return 0;
-};
+}
