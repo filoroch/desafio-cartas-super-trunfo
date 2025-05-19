@@ -18,7 +18,7 @@ typedef struct{
 } Card;
 
 // MENU DE SELEÇÃO DE COMPARAÇÃO
-void compare_card_atribute(Card *c1, Card *c2, const char *atributo){
+float compare_card_atribute(Card *c1, Card *c2, const char *atributo){
 
    float valor1, valor2;
    char city1[50];
@@ -43,8 +43,8 @@ void compare_card_atribute(Card *c1, Card *c2, const char *atributo){
        valor1 = c1->PIB_per_capita;
        valor2 = c2->PIB_per_capita;
    } else {
-       printf("Atributo inválido!\n");
-       return;
+       return printf("Atributo inválido!\n");
+       
    }
     // Comparando os valores retornados dos atributos escolhdos
      printf("\nComparação de cartas (Atributo: %s)\n", atributo); // Adicionado \n
@@ -58,44 +58,53 @@ void compare_card_atribute(Card *c1, Card *c2, const char *atributo){
     }
 
     if (valor1 == c1->densidadePopulacional) {
-        valor1 < valor2 ? printf("Resultado: Carta 1 (%s) venceu!\n", city1) :  printf("Resultado: Carta 2 (%s) venceu!\n", city2);
+        // Para densidade populacional, menor é melhor
+        if (valor1 < valor2){
+            printf("Resultado: Carta 1 (%s) venceu!\n", city1);
+            return valor1;
+        } else {  
+            printf("Resultado: Carta 2 (%s) venceu!\n", city2);
+            return valor2;
+        }
+    
     } else {
-        // Comparando os valores retornados dos atributos escolhidos
+        // Comparando os valores retornados dos atributos escolhidos (maior é melhor)
         if (valor1 > valor2) {
             printf("Resultado: Carta 1 (%s) venceu!\n", city1);
+            return valor1;
         } else if (valor2 > valor1) { // Se valor2 é maior
             printf("Resultado: Carta 2 (%s) venceu!\n", city2);
+            return valor2;
         } else { // Se são iguais
             printf("Resultado: Empate!\n");
+            // Em caso de empate, retorna o valor (são iguais mesmo)
+            return valor1;
         }
     }
 }
 
 // MENU DE SELEÇÃO DE COMPARAÇÃO
-void imprima_comparação_cartas(Card *c1, Card *c2){
+float imprima_comparação_cartas(Card *c1, Card *c2){
     int atributo;
+    float resultado = 0;
     
     printf("Escolha um atributo para comparação: \n1. População\n2. Area\n3. PIB\n4. Densidade Populacional\n5.PIB per capta\n");
     scanf("%d", &atributo);
 
     switch (atributo){
         case 1:
-            compare_card_atribute(c1, c2, "population");
-            break;
+            return compare_card_atribute(c1, c2, "population");
         case 2:
-            compare_card_atribute(c1, c2, "area");
-            break;
+            return compare_card_atribute(c1, c2, "area");
         case 3:
-            compare_card_atribute(c1, c2, "PIB");
-            break;
+            return compare_card_atribute(c1, c2, "PIB");
         case 4:
-            compare_card_atribute(c1, c2, "densidadePopulacional");
-            break;
+            return compare_card_atribute(c1, c2, "densidadePopulacional");
         case 5:
-            compare_card_atribute(c1, c2, "PIB_per_capita");
-            break;
+            return compare_card_atribute(c1, c2, "PIB_per_capita");
         default:
-            break;
+            printf("Opção inválida! Escolhendo População como padrão.\n");
+            return compare_card_atribute(c1, c2, "population");
     }
 }
 
@@ -243,7 +252,7 @@ int main(){
     
     // MENU PRINCIPAL DO SISTEMA
     do {
-        printf("\nSUPER TRUNFO \n1. Cadastrar duas cartas\n2. Imprimir duas cartas\n3. Comparar o super poder das cartas\n4. Comparar um atributo individualmente\n5. Sair\n");
+        printf("\nSUPER TRUNFO \n1. Cadastrar duas cartas\n2. Imprimir duas cartas\n3. Comparar o super poder das cartas\n4. Comparar um atributo individualmente\n5. Comparar dois atributos\n");
         scanf("%d", &userI);
 
         switch (userI){
@@ -273,6 +282,63 @@ int main(){
                     break;
                 case 4: // CHAMA A FUNÇÃO DE COMPARAÇÃO DE ATRIBUTOS UNICOS
                     (card1_exist == 0 || card2_exist == 0) ? printf("Cadastre as cartas antes de imprimi-las!") : imprima_comparação_cartas(&card1, &card2);
+                    userI = 0;
+                    break;
+                case 5:
+                    if (card1_exist == 0 || card2_exist == 0) {
+                        printf("Cadastre as cartas antes de compará-las!");
+                    } else {
+                        float result1 = 0, result2 = 0;
+                        int card1_venceu = 0, card2_venceu = 0;
+                        
+                        printf("\n--- COMPARAÇÃO DE DOIS ATRIBUTOS ---\n");
+                        
+                        // Primeira comparação
+                        printf("\n--- PRIMEIRA COMPARAÇÃO ---\n");
+                        float valor1_antes = card1.population;
+                        float valor2_antes = card2.population;
+                        result1 = imprima_comparação_cartas(&card1, &card2);
+                        
+                        // Determina o vencedor da primeira comparação
+                        if (card1.population != valor1_antes || card1.area != card1.area || 
+                            card1.PIB != card1.PIB || card1.densidadePopulacional != card1.densidadePopulacional || 
+                            card1.PIB_per_capita != card1.PIB_per_capita) {
+                            // Se algum valor mudou, pode ter sido por causa de um erro ou retorno da função
+                            // Vamos fazer uma comparação simples
+                            if (result1 > 0) {
+                                card1_venceu++;
+                            } else {
+                                card2_venceu++;
+                            }
+                        }
+                        
+                        // Segunda comparação
+                        printf("\n--- SEGUNDA COMPARAÇÃO ---\n");
+                        result2 = imprima_comparação_cartas(&card1, &card2);
+                        
+                        // Determina o vencedor da segunda comparação
+                        if (result2 > 0) {
+                            card1_venceu++;
+                        } else {
+                            card2_venceu++;
+                        }
+                        
+                        // Somar os valores e determinar o vencedor final
+                        float soma_valores = result1 + result2;
+                        
+                        printf("\n--- RESULTADO FINAL ---\n");
+                        printf("Soma dos valores dos atributos: %.2f\n", soma_valores);
+                        printf("Carta 1 (%s) venceu %d comparações\n", card1.city, card1_venceu);
+                        printf("Carta 2 (%s) venceu %d comparações\n", card2.city, card2_venceu);
+                        
+                        if (card1_venceu > card2_venceu) {
+                            printf("Resultado final: Carta 1 (%s) venceu na maioria dos atributos!\n", card1.city);
+                        } else if (card2_venceu > card1_venceu) {
+                            printf("Resultado final: Carta 2 (%s) venceu na maioria dos atributos!\n", card2.city);
+                        } else {
+                            printf("Resultado final: Empate no número de atributos vencedores!\n");
+                        }
+                    }
                     userI = 0;
                     break;
                 default:
