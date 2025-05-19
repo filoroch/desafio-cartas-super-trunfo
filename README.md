@@ -48,7 +48,110 @@ O projeto foi dividido em níveis, cada um adicionando novas funcionalidades e c
     *   A função `compare_super_power()` foi corrigida em [`460f7cc`](https://github.com/filoroch/desafio-cartas-super-trunfo/commit/460f7cc) (Correção de tipos no printf).
     *   O `main()` chama `imprima_comparação_cartas()` para iniciar o processo de comparação interativa, refletindo as atualizações desta fase.
 
+### 2.3. Nível Mestre: Comparação com Múltiplos Atributos
+
+*   **Requisitos Principais:**
+    *   Permitir que o jogador escolha dois atributos numéricos diferentes para a comparação das cartas.
+    *   Implementar lógica para comparar as duas cartas com base nos dois atributos escolhidos.
+    *   Somar os valores dos atributos para cada carta após as comparações individuais.
+    *   A carta com a maior soma de valores vence a rodada.
+    *   Tratar empates adequadamente mostrando mensagem clara.
+    *   Exibir resultados de forma organizada incluindo todos os detalhes de comparação.
+
+*   **Desenvolvimento Atual Referente a Este Nível:**
+    *   Implementado no case 5 do menu principal, a funcionalidade permite a escolha de dois atributos diferentes.
+    *   A função `imprima_comparação_cartas()` é chamada duas vezes para permitir a escolha dos dois atributos.
+    *   O código contabiliza as vitórias de cada carta nas comparações individuais.
+    *   Calcula a soma dos valores dos atributos vencedores para determinar o resultado final.
+    *   A exibição de resultados mostra a soma dos valores, contagem de vitórias e o vencedor final.
+    *   A lógica de comparação trata corretamente os casos especiais (como densidade populacional).
+
 *(Nota: A associação de funcionalidades a commits específicos é uma interpretação baseada nas mensagens de commit e pode não refletir todo o escopo de cada alteração. Commits de documentação como `c826ba8`, `5e0ca0b`, `affe0b3`, `c9d31a2` atualizaram o README em vários estágios.)*
+
+## 6. Fluxograma do Programa
+
+### Parte 1: Inicialização do Programa
+
+```mermaid
+graph TD
+    A[Início] --> B[Declarar variáveis]
+    B --> C[Flags não inicializadas]
+    C --> D[Inicializar cards]
+    D --> E[Calcular atributos derivados]
+    E --> F[Calcular super_power]
+    F --> G[Comparação inicial]
+    G --> H[Exibir Menu Principal]
+    H --> I[Ler opção userI]
+    I --> J[Início do Loop while]
+```
+
+### Parte 2: Case 1 - Cadastrar Cartas
+
+```mermaid
+graph TD
+    A[Switch userI] --> B[Case 1: Cadastrar cartas]
+    B --> C{Verificar flags}
+    C -->|Cartas existem| D[Mostrar aviso]
+    C -->|Cartas não existem| E[Cadastrar card1]
+    E --> F[card1_exist = 1]
+    F --> G[Cadastrar card2]
+    G --> H[card1_exist = 2]
+    H --> I[break]
+    D --> I
+```
+
+### Parte 3: Case 2 - Imprimir Cartas
+
+```mermaid
+graph TD
+    A[Switch userI] --> B[Case 2: Imprimir cartas]
+    B --> C{Verificar flags}
+    C -->|Cartas incompletas| D[Mostrar aviso]
+    C -->|Cartas completas| E[Imprimir card1]
+    E --> F[Imprimir card2]
+    F --> G[break]
+    D --> G
+```
+
+### Parte 4: Case 3 - Comparar Super Poder
+
+```mermaid
+graph TD
+    A[Switch userI] --> B[Case 3: Super poder]
+    B --> C{Verificar flags}
+    C -->|Cartas incompletas| D[Mostrar aviso]
+    C -->|Cartas completas| E[Comparar poderes]
+    E --> F[break]
+    D --> F
+```
+
+### Parte 5: Case 4 - Comparar Atributos
+
+```mermaid
+graph TD
+    A[Switch userI] --> B[Case 4: Atributos]
+    B --> C{Verificar flags}
+    C -->|Cartas incompletas| D[Mostrar aviso]
+    C -->|Cartas completas| E[Comparar atributos]
+    E --> F[break]
+    D --> F
+```
+
+### Parte 6: Case 5 - Comparar Dois Atributos
+
+```mermaid
+graph TD
+    A[Switch userI] --> B[Case 5: Comparar dois atributos]
+    B --> C{Verificar flags}
+    C -->|Cartas incompletas| D[Mostrar aviso]
+    C -->|Cartas completas| E[Primeira comparação]
+    E --> F[Segunda comparação]
+    F --> G[Somar valores]
+    G --> H[Determinar vencedor]
+    H --> I[Mostrar resultado]
+    I --> J[break]
+    D --> J
+```
 
 ## 3. Como Compilar e Executar
 
@@ -74,9 +177,25 @@ O projeto foi dividido em níveis, cada um adicionando novas funcionalidades e c
     ./CartasSuperTrunfo
     ```
 
-## 4. Exemplo de Uso (Menu de Comparação do Nível Aventureiro)
+## 4. Exemplo de Uso 
 
-Ao executar o programa, você será apresentado a um menu para escolher o atributo de comparação:
+### 4.1. Menu Principal
+
+Ao executar o programa, você será apresentado ao menu principal:
+
+```
+SUPER TRUNFO 
+1. Cadastrar duas cartas
+2. Imprimir duas cartas
+3. Comparar o super poder das cartas
+4. Comparar um atributo individualmente
+5. Comparar dois atributos
+Opção: _
+```
+
+### 4.2. Comparação de Um Atributo (Nível Aventureiro)
+
+Ao escolher a opção 4 no menu principal, você verá:
 
 ```
 Escolha um atributo para comparação: 
@@ -89,6 +208,46 @@ Opção: _
 ```
 
 Digite o número correspondente ao atributo desejado e pressione Enter. O programa então mostrará os valores das cartas para esse atributo e o resultado da comparação.
+
+### 4.3. Comparação de Dois Atributos (Nível Mestre)
+
+Ao escolher a opção 5 no menu principal, o programa solicitará que você escolha dois atributos diferentes:
+
+```
+--- COMPARAÇÃO DE DOIS ATRIBUTOS ---
+
+--- PRIMEIRA COMPARAÇÃO ---
+Escolha um atributo para comparação: 
+1. População
+2. Area
+3. PIB
+4. Densidade Populacional
+5.PIB per capta
+Opção: _
+```
+
+Após a primeira escolha e comparação, o programa solicitará:
+
+```
+--- SEGUNDA COMPARAÇÃO ---
+Escolha um atributo para comparação: 
+1. População
+2. Area
+3. PIB
+4. Densidade Populacional
+5.PIB per capta
+Opção: _
+```
+
+Finalmente, o programa exibirá um resumo detalhado:
+
+```
+--- RESULTADO FINAL ---
+Soma dos valores dos atributos: XXX.XX
+Carta 1 (Nome da Cidade 1) venceu X comparações
+Carta 2 (Nome da Cidade 2) venceu Y comparações
+Resultado final: Carta X (Nome da Cidade) venceu na maioria dos atributos!
+```
 
 ## 5. Desenvolvido por
 
